@@ -9,8 +9,8 @@ namespace LibraryManagement.Services
     {
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            var emailSender = "LibraryMangement@outlook.com";
-            var password = "LibrarySys"; // Retrieve from secure storage
+            var emailSender = "MS_TVbzOX@trial-yzkq340rv064d796.mlsender.net";
+            var password = "DpkIFFKou8MN9lai"; // Retrieve from secure storage
 
             var msg = new MailMessage();
             msg.From = new MailAddress(emailSender);
@@ -19,7 +19,7 @@ namespace LibraryManagement.Services
             msg.Body = htmlMessage;
             msg.IsBodyHtml = true;
 
-            using (var smtpClient = new SmtpClient("smtp-mail.outlook.com")
+            using (var smtpClient = new SmtpClient("smtp.mailersend.net")
             {
                 UseDefaultCredentials = false,
                 Port = 587, // Use 465 for SSL, 587 for TLS
