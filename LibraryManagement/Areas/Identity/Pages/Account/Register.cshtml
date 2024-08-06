@@ -1,0 +1,121 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<style>
+    body {
+        background-color: #121212; /* Dark background for the page */
+        color: #e0e0e0; /* Light text color */
+        font-family: 'Arial', sans-serif;
+    }
+
+    h1, h2, h3 {
+        color: #e0e0e0; /* Light text color for headings */
+    }
+
+    .container {
+        margin-top: 5%;
+    }
+
+    .form-floating {
+        margin-bottom: 1rem; /* Space between form fields */
+    }
+
+    .form-control {
+        background-color: #1e1e1e; /* Dark background for inputs */
+        color: e0e0e0; /* Light text color for inputs */
+        border: 1px solid #444; /* Subtle border */
+        border-radius: 8px; /* Rounded corners */
+    }
+
+        .form-control:focus {
+            border-color: #555; /* Slightly lighter border on focus */
+            box-shadow: none; /* Remove default focus shadow */
+            color: black
+        }
+
+    .form-label {
+        color: #e0e0e0; /* Light color for labels */
+    }
+
+    .btn-primary {
+        background-color: #1e1e1e; /* Dark background for buttons */
+        border-color: #444; /* Matching border color */
+        border-radius: 8px; /* Rounded corners */
+        padding: 10px 20px; /* Cozy padding */
+        transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transition */
+    }
+
+        .btn-primary:hover {
+            background-color: #333; /* Slightly darker shade on hover */
+            border-color: #555; /* Darker border color on hover */
+        }
+
+        .btn-primary:focus {
+            box-shadow: none; /* Remove default focus shadow */
+        }
+
+    .text-danger {
+        color: #ff4d4d; /* Error message color */
+    }
+
+    hr {
+        border: 1px solid #444; /* Subtle horizontal rule */
+    }
+
+    .section {
+        background-color: #1e1e1e; /* Dark background for sections */
+        padding: 20px; /* Cozy padding */
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    }
+
+    .offset-md-3 {
+        margin-left: 25%;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="section">
+                <h2>Create a new account.</h2>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.FirstName" class="form-control" autocomplete="off" required="true" />
+                    <label asp-for="Input.FirstName"class="form-label">First Name</label>
+                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.LastName" class="form-control" autocomplete="off" required="true" />
+                    <label asp-for="Input.LastName" class="form-label">Last Name</label>
+                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <label asp-for="Input.Email">Email</label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <label asp-for="Input.Password">Password</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,153 @@
+﻿@{
+    ViewData["Title"] = "Styled Cards Page";
+}
+
+<style>
+    body {
+        background-color: #121212; /* Dark background for the entire page */
+        color: #e0e0e0; /* Light text color for readability */
+    }
+
+    .card {
+        background-color: #1e1e1e; /* Dark background for the card */
+        color: #e0e0e0; /* Light text color */
+        border: 1px solid #444; /* Subtle border */
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+        background-size: cover; /* Cover the card area */
+        background-position: center; /* Center the background image */
+        background-repeat: no-repeat; /* Prevent image repetition */
+        border:transparent
+    }
+
+        .card:hover {
+            transform: scale(1.05); /* Slightly enlarge the card on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
+        }
+
+    .card-body {
+        padding: 20px; /* Cozy padding */
+        -webkit-backdrop-filter: blur(2px);
+        backdrop-filter: blur(2px);
+        padding-bottom: 100px;
+    }
+    
+    .card-body:hover{
+            -webkit-backdrop-filter: blur(0px);
+            backdrop-filter: blur(0px);
+    }
+
+    .card-title {
+        font-size: 1.5rem; /* Larger title */
+        margin-bottom: 10px; /* Space below the title */
+    }
+
+    .card-text {
+        font-size: 1rem; /* Adjusted font size */
+    }
+
+    .btn-primary {
+        background-color: black; /* Bootstrap primary color */
+        border-color: #323232; /* Matching border color */
+        border-radius: 5px; /* Rounded corners */
+        padding: 10px 20px; /* Cozy padding */
+    }
+
+        .btn-primary:hover {
+            background-color: #323232; /* Darker shade on hover */
+            border-color: black; /* Darker border color */
+        }
+
+    .btn-primary1 {
+        background-color: #323232; /* Bootstrap primary color */
+        color: white;
+        border-color: black/* Matching border color */
+        border-radius: 5px; /* Rounded corners */
+        padding: 10px 20px; /* Cozy padding */
+    }
+
+        .btn-primary1:hover {
+            background-color: black;/* Darker shade on hover */
+            border-color: #323232; /* Darker border color */
+            color: white;
+        }
+
+
+    .row {
+        margin-top: 20px; /* Space above the row */
+    }
+
+    .container {
+        margin-top: 6%;
+    }
+
+    /* Background images for specific cards */
+    .card-bg-1 {
+        background-image: url('/uploads/DontDelete1.jpg');
+        background-size: 300px;
+        background-color: black;
+    }
+
+    .card-bg-2 {
+        background-image: url('/uploads/DontDelete2.jpg');
+        background-size: 250px;
+        background-color: #323232
+    }
+
+    .card-bg-3 {
+        background-image: url('/uploads/DontDelete5.jpg');
+        background-size: 300px;
+        background-color: black
+    }
+
+    .card-bg-4 {
+        background-image: url('/uploads/DontDelete3.jpg');
+        background-size: 250px;
+        background-color: #323232
+    }
+
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card card-bg-1">
+                <div class="card-body">
+                    <h5 class="card-title">Books List</h5>
+                    <p class="card-text">You can find all your books here.</p>
+                    <a asp-action="Index" asp-controller="Book" class="btn btn-primary1">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card card-bg-2">
+                <div class="card-body">
+                    <h5 class="card-title">Authors List</h5>
+                    <p class="card-text">You can find all your authors here.</p>
+                    <a asp-action="Index" asp-controller="Author" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card card-bg-3">
+                <div class="card-body">
+                    <h5 class="card-title">Add a book</h5>
+                    <p class="card-text">Add a new book to your list.</p>
+                    <a asp-action="Create" asp-controller="Book" class="btn btn-primary1">Add</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card card-bg-4">
+                <div class="card-body">
+                    <h5 class="card-title">Add an author</h5>
+                    <p class="card-text">Add a new author to your list.</p>
+                    <a asp-action="Create" asp-controller="Author" class="btn btn-primary">Add</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

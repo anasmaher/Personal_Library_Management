@@ -1,0 +1,190 @@
+﻿@model LibraryManagement.ViewModels.BookAuthorVM
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Book - BookStore</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BookStore.styles.css" asp-append-version="true" />
+
+    <style>
+        body {
+            background-color: #121212; /* Dark background color for the page */
+            color: #e0e0e0; /* Light text color for better readability */
+        }
+
+        .container {
+            margin-top: 2rem;
+        }
+
+        .card {
+            background-color: #1e1e1e; /* Dark background for the card */
+            border-color: #333; /* Darker border color */
+        }
+
+        .card-header {
+            background-color: #333; /* Yellow for card header */
+        }
+
+        .btn-primary {
+            background-color: #333; /* Yellow button color */
+            border: none; /* Remove border */
+        }
+
+            .btn-primary:hover {
+                background-color: #333; /* Darker yellow on hover */
+            }
+
+        .btn-secondary {
+            background-color: #424242; /* Darker grey for secondary button */
+            border: none; /* Remove border */
+        }
+
+            .btn-secondary:hover {
+                background-color: #616161; /* Lighter grey on hover */
+            }
+
+        .text-muted {
+            color: #6c757d; /* Muted text color */
+        }
+
+        h1, h4 {
+            text-align: center; /* Center-align headings */
+        }
+
+        .btn {
+            border-radius: 0.25rem; /* Rounded corners for buttons */
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem; /* Space between form elements */
+        }
+
+        #newAuthorFields {
+            display: none; /* Initially hide the new author fields */
+        }
+
+        .text-danger {
+            color: #ff0000; /* Red color for error messages */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="text-center my-4">Give life to another story...</h1>
+
+        <hr />
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Create Book</h4>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Create" enctype="multipart/form-data" id="createBookForm">
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                            <div class="form-group">
+                                <label asp-for="Title" class="control-label"></label>
+                                <input asp-for="Title" class="form-control" placeholder="Enter book title" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label"></label>
+                                <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Author</label>
+                                <select asp-for="AuthorId" class="form-control" asp-items="@(new SelectList(Model.Authors, "Id", "Name"))" id="authorSelect">
+                                    <option value="">Select an author</option>
+                                    <option value="new">Add New Author</option>
+                                    @(new SelectList(Model.Authors, "Id", "Name"))"
+                                </select>
+                                <span asp-validation-for="AuthorId" class="text-danger"></span>
+                            </div>
+                            <div id="newAuthorFields" class="form-group">
+                                <div class="form-group">
+                                    <label class="control-label">New Author Name</label>
+                                    <input type="text" id="NewAuthorName" name="NewAuthorName" class="form-control" placeholder="Enter author name" />
+                                    <span id="newAuthorNameError" class="text-danger" style="display:none;">New Author Name is required.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">New Author Photo</label>
+                                    <input type="file" id="NewAuthorPhoto" name="NewAuthorPhoto" class="form-control" />
+                                    <span id="newAuthorPhotoError" class="text-danger" style="display:none;">New Author Photo is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Image</label>
+                                <input required type="file" asp-for="Image" class="form-control" />
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">File</label>
+                                <input required type="file" asp-for="Pdf" class="form-control" />
+                                <span asp-validation-for="Pdf" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mt-4">
+                                <input type="submit" value="Create" class="btn btn-primary btn-block" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            
+            <a asp-controller="Book" asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#authorSelect').change(function () {
+                if ($(this).val() === "new") {
+                    $('#newAuthorFields').show();
+                } else {
+                    $('#newAuthorFields').hide();
+                }
+            });
+
+            $('#createBookForm').submit(function (event) {
+                var isValid = true;
+
+                if ($('#authorSelect').val() === "new") {
+                    if ($('#NewAuthorName').val().trim() === "") {
+                        $('#newAuthorNameError').show();
+                        isValid = false;
+                    } else {
+                        $('#newAuthorNameError').hide();
+                    }
+
+                    if ($('#NewAuthorPhoto').val().trim() === "") {
+                        $('#newAuthorPhotoError').show();
+                        isValid = false;
+                    } else {
+                        $('#newAuthorPhotoError').hide();
+                    }
+                }
+
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+</body>
+</html>

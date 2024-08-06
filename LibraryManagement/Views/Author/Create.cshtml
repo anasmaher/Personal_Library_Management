@@ -1,0 +1,119 @@
+﻿@model LibraryManagement.Models.Author
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Author - BookStore</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BookStore.styles.css" asp-append-version="true" />
+
+    <style>
+        body {
+            background-color: #121212; /* Dark background color for the page */
+            color: #e0e0e0; /* Light text color for better readability */
+        }
+
+        .container {
+            margin-top: 2rem;
+        }
+
+        .card {
+            background-color: #1e1e1e; /* Dark background for the card */
+            border-color: #333; /* Darker border color */
+        }
+
+        .card-header {
+            background-color: #333; /* Yellow for card header */
+            color: white; /* Dark text color for the header */
+        }
+
+        .btn-primary {
+            background-color: #333; /* Yellow button color */
+            border: none; /* Remove border */
+            color: white; /* Dark text color */
+        }
+
+            .btn-primary:hover {
+                background-color: #333; /* Darker yellow on hover */
+            }
+
+        .btn-secondary {
+            background-color: #424242; /* Darker grey for secondary button */
+            border: none; /* Remove border */
+        }
+
+            .btn-secondary:hover {
+                background-color: #616161; /* Lighter grey on hover */
+            }
+
+        .text-muted {
+            color: #6c757d; /* Muted text color */
+        }
+
+        .text-center {
+            text-align: center; /* Center-align text */
+        }
+
+        .form-group {
+            margin-bottom: 1rem; /* Space between form elements */
+        }
+
+        .form-control {
+            border-radius: 0.25rem; /* Rounded corners for form controls */
+        }
+
+        .btn {
+            border-radius: 0.25rem; /* Rounded corners for buttons */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Create Author</h4>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Create" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                            <div class="form-group">
+                                <label asp-for="Name" class="control-label"></label>
+                                <input asp-for="Name" class="form-control" placeholder="Enter author name" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Image" class="control-label"></label>
+                                <input required type="file" asp-for="Image" class="form-control" />
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mt-4">
+                                <input type="submit" value="Create" class="btn btn-primary btn-block" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+</body>
+</html>

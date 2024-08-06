@@ -1,0 +1,226 @@
+﻿@model IEnumerable<LibraryManagement.Models.Book>
+
+@{
+    // Go to the layout nav-bar for info about this
+    ViewBag.ShowSearchForm = "AddBookToAuthor";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        .card {
+            position: relative;
+            transition: transform 0.4s, box-shadow 0.4s;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            overflow: hidden;
+        }
+
+            .card:hover {
+                transform: scale(1.03);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            }
+
+        .card-img-container {
+            position: relative;
+        }
+
+        .card-img-top {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+            transition: opacity 0.4s;
+        }
+
+        .card-description {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background-color: transparent;
+            color: transparent;
+            transition: opacity 0.4s, visibility 0.4s;
+            opacity: 0;
+            visibility: hidden;
+            text-align: center;
+            border-radius: 0 0 8px 8px;
+            height: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .card-img-container:hover .card-description {
+            opacity: 1;
+            visibility: visible;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #e0e0e0;
+        }
+
+        .btn-outline-warning,
+        .btn-outline-info,
+        .btn-outline-danger,
+        .btn-outline-primary {
+            border-radius: 20px;
+            border-width: 1px;
+            padding: 8px 16px;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            transition: background-color 0.3s, color 0.3s;
+            margin-top: 12px;
+        }
+
+        .btn-outline-warning {
+            border-color: #ffc107;
+            color: #ffc107;
+        }
+
+            .btn-outline-warning:hover {
+                background-color: #ffc107;
+                color: white;
+            }
+
+        .btn-outline-info {
+            border-color: #17a2b8;
+            color: #17a2b8;
+        }
+
+            .btn-outline-info:hover {
+                background-color: #17a2b8;
+                color: white;
+            }
+
+        .btn-outline-danger {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+            .btn-outline-danger:hover {
+                background-color: #dc3545;
+                color: white;
+            }
+
+        .btn-outline-primary {
+            border-color: #007bff;
+            color: #007bff;
+        }
+
+            .btn-outline-primary:hover {
+                background-color: #007bff;
+                color: white;
+            }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+
+        .d-flex {
+            display: flex;
+            gap: 10px;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .text-center {
+            margin-bottom: 20px;
+        }
+
+        .row {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px black;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background: #333;
+            border-width: 2px;
+            border-color: black;
+        }
+
+            .btn-primary:hover {
+                background: black;
+                color: white;
+                border-color: black;
+            }
+
+        .success-message {
+            display: none;
+            color: #28a745;
+            margin-top: 10px;
+        }
+    </style>
+
+    <script>
+        function submitForm(event, form) {
+            event.preventDefault();
+
+            const formData = new FormData(form);
+            const successMessage = form.closest('.card').querySelector('.success-message');
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        successMessage.style.display = 'block';
+                    } else {
+                        console.error('Failed to add book to author');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Books List</h1>
+
+        <div class="row">
+            @foreach (var book in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-img-container">
+                            <img src="~/@book.PhotoUrl" class="card-img-top" alt="@book.Name">
+                            <div class="card-description">
+                                <p>@Html.DisplayFor(modelItem => book.Description)</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayFor(modelItem => book.Name)</h5>
+                            <div class="d-flex justify-content-center">
+                                <form asp-action="AddBooksToAuthorPost" asp-route-id="@ViewBag.AuthorId" method="post" onsubmit="submitForm(event, this)">
+                                    <input type="hidden" name="BookId" value="@book.Id" />
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">Add</button>
+                                </form>
+                                <span class="success-message">Added</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>
